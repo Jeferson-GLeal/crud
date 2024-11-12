@@ -3,7 +3,7 @@ package com.crud.api.controller;
 import com.crud.api.domain.model.Pessoa;
 import com.crud.api.domain.model.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +33,11 @@ public class PessoaController {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 
         return pessoa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Pessoa adicionar(@RequestBody Pessoa pessoa) {
+        return pessoaRepository.save(pessoa);
     }
 }
