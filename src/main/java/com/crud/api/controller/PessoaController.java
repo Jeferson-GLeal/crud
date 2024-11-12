@@ -4,25 +4,34 @@ import com.crud.api.domain.model.Pessoa;
 import com.crud.api.domain.model.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/pessoas")
 public class PessoaController {
 
     private final PessoaRepository pessoaRepository;
 
-    @GetMapping("/pessoas")
     public List<Pessoa> listar() {
         return pessoaRepository.findAll();
     }
 
-    @GetMapping("/pessoas/{nome}")
-    public List<Pessoa> listarPorNome(@PathVariable String nome) {
-        return pessoaRepository.findByNomeContaining(nome);
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<Pessoa> pesquisarPorNome(@PathVariable String nome) {
+        Optional<Pessoa> pessoa = pessoaRepository.findByNomeContaining(nome);
+
+        return pessoa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value = "/id/{id}")
+    public ResponseEntity<Pessoa> pesquisarPorId(@PathVariable Long id) {
+        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+
+        return pessoa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
