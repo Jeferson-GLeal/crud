@@ -27,6 +27,7 @@ public class Pessoa {
     private String dataNascimento;
 
     private String telefone;
+    private String email;
 
     @Column(name = "estadocivil")
     private String estadoCivil;

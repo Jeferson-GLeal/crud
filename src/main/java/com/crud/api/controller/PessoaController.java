@@ -17,6 +17,7 @@ public class PessoaController {
 
     private final PessoaRepository pessoaRepository;
 
+    @GetMapping
     public List<Pessoa> listar() {
         return pessoaRepository.findAll();
     }
@@ -39,5 +40,16 @@ public class PessoaController {
     @ResponseStatus(HttpStatus.CREATED)
     public Pessoa adicionar(@RequestBody Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
+    }
+
+    @PutMapping("/{pessoaId}")
+    public ResponseEntity<Pessoa> atualizar(@PathVariable Long pessoaId, @RequestBody Pessoa pessoa) {
+
+        if (!pessoaRepository.existsById(pessoaId)) {
+            return ResponseEntity.notFound().build();
+        }
+        pessoa.setId(pessoaId);
+        Pessoa pessoaAtualizada = pessoaRepository.save(pessoa);
+        return ResponseEntity.ok(pessoaAtualizada);
     }
 }
