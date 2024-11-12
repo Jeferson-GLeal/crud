@@ -52,4 +52,14 @@ public class PessoaController {
         Pessoa pessoaAtualizada = pessoaRepository.save(pessoa);
         return ResponseEntity.ok(pessoaAtualizada);
     }
+
+    @DeleteMapping("/{pessoaId}")
+    public ResponseEntity<Void> excluir(@PathVariable Long pessoaId) {
+
+        if (!pessoaRepository.existsById(pessoaId)) {
+            return ResponseEntity.notFound().build();
+        }
+        pessoaRepository.deleteById(pessoaId);
+        return ResponseEntity.noContent().build();
+    }
 }
