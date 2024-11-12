@@ -3,13 +3,14 @@ create table pessoas(
                         nome         varchar(60) not null,
                         sobrenome    varchar(60) not null,
                         idade        varchar(2)  not null,
-                        rg           varchar(9)  not null,
-                        cpf          varchar(11) not null,
-                        datanasc     varchar(8)  not null,
-                        telefone     varchar(11) not null,
-                        estadocivil  varchar(15) not null,
+                        rg           varchar(12)  not null,
+                        cpf          varchar(14) not null,
+                        datanasc     varchar(10)  not null,
+                        telefone     varchar(15) not null,
+                        email        varchar(35),
+                        estadocivil  varchar(20) not null,
                         escolaridade varchar(50) not null,
-                        profissao    varchar(30) not null,
+                        profissao    varchar(50) not null,
 
                         primary key (id)
 
