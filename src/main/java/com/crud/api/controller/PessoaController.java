@@ -1,7 +1,10 @@
 package com.crud.api.controller;
 
+import com.crud.api.domain.exception.CadastroException;
 import com.crud.api.domain.model.Pessoa;
 import com.crud.api.domain.model.repository.PessoaRepository;
+import com.crud.api.domain.service.CadastroPessoaService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("/pessoas")
 public class PessoaController {
 
+    private final CadastroPessoaService cadastroPessoaService;
     private final PessoaRepository pessoaRepository;
 
     @GetMapping
@@ -38,18 +42,19 @@ public class PessoaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pessoa adicionar(@RequestBody Pessoa pessoa) {
-        return pessoaRepository.save(pessoa);
+    public Pessoa adicionar(@Valid @RequestBody Pessoa pessoa) {
+
+        return cadastroPessoaService.salvar(pessoa);
     }
 
     @PutMapping("/{pessoaId}")
-    public ResponseEntity<Pessoa> atualizar(@PathVariable Long pessoaId, @RequestBody Pessoa pessoa) {
+    public ResponseEntity<Pessoa> atualizar(@PathVariable Long pessoaId, @Valid @RequestBody Pessoa pessoa) {
 
         if (!pessoaRepository.existsById(pessoaId)) {
             return ResponseEntity.notFound().build();
         }
         pessoa.setId(pessoaId);
-        Pessoa pessoaAtualizada = pessoaRepository.save(pessoa);
+        Pessoa pessoaAtualizada = cadastroPessoaService.salvar(pessoa);
         return ResponseEntity.ok(pessoaAtualizada);
     }
 
@@ -59,7 +64,12 @@ public class PessoaController {
         if (!pessoaRepository.existsById(pessoaId)) {
             return ResponseEntity.notFound().build();
         }
-        pessoaRepository.deleteById(pessoaId);
+        cadastroPessoaService.excluir(pessoaId);
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler(CadastroException.class)
+    public ResponseEntity<String> capturar (CadastroException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     Optional<Pessoa> findByNomeContaining(String nome);
+    Optional<Pessoa> findByEmail(String email);
 }

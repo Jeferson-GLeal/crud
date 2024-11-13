@@ -1,6 +1,9 @@
 package com.crud.api.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +19,8 @@ public class Pessoa {
     private Long id;
     private String nome;
 
+    @NotBlank
+    @Size(max = 60)
     @Column(name = "sobrenome")
     private String sobreNome;
 
@@ -26,7 +31,11 @@ public class Pessoa {
     @Column(name = "datanasc")
     private String dataNascimento;
 
+    @NotBlank
+    @Size(max = 20)
     private String telefone;
+
+    @Email
     private String email;
 
     @Column(name = "estadocivil")
