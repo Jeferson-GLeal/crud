@@ -67,9 +67,4 @@ public class PessoaController {
         cadastroPessoaService.excluir(pessoaId);
         return ResponseEntity.noContent().build();
     }
-
-    @ExceptionHandler(CadastroException.class)
-    public ResponseEntity<String> capturar (CadastroException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
 }

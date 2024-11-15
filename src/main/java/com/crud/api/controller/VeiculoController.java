@@ -40,9 +40,4 @@ public class VeiculoController {
     public Veiculo cadastrar(@Valid @RequestBody Veiculo veiculo){
         return cadastroVeiculoService.cadastrar(veiculo);
     }
-
-    @ExceptionHandler(CadastroException.class)
-    public ResponseEntity<String> capturar (CadastroException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
 }
