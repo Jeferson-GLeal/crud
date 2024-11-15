@@ -13,6 +13,11 @@ public class CadastroPessoaService {
 
     private final PessoaRepository pessoaRepository;
 
+    public Pessoa buscar(Long pessoaID) {
+        return pessoaRepository.findById(pessoaID)
+                .orElseThrow(() -> new CadastroException("Pessoa não encontrada"));
+    }
+
     @Transactional
     public Pessoa salvar(Pessoa pessoa) {
 

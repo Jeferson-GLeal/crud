@@ -5,9 +5,11 @@ create table veiculo(
                         modelo varchar(50) not null,
                         versao varchar(50) not null,
                         cor varchar(30) not null,
-                        transmissao varchar (20),
+                        transmissao varchar (20) not null,
+                        ano varchar (4) not null,
                         placa varchar(8) not null,
                         status varchar(20) not null,
+                        condutor varchar(10) not null,
                         data_cadastro datetime not null,
                         data_atualizacao datetime,
 
