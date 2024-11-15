@@ -1,12 +1,15 @@
 create table veiculo(
                         id bigint not null auto_increment,
                         pessoa_id bigint not null,
-                        marca varchar(20) not null,
-                        modelo varchar(20) not null,
-                        placa varchar(7) not null,
+                        marca varchar(35) not null,
+                        modelo varchar(50) not null,
+                        versao varchar(50) not null,
+                        cor varchar(30) not null,
+                        transmissao varchar (20),
+                        placa varchar(8) not null,
                         status varchar(20) not null,
                         data_cadastro datetime not null,
-                        data_apreensao datetime,
+                        data_atualizacao datetime,
 
                         primary key (id)
 );
